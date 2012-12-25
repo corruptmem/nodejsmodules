@@ -7,13 +7,14 @@
     <link href='http://fonts.googleapis.com/css?family=Exo:200,400,600,800' rel='stylesheet' type='text/css'>
   </head>
   <body>
+    <div id='container'>
     <header>
       <h1>Node.JS Modules</h1>
       
       <ul id='page'>
-        <li class='selected'>Popular</li>
-        <li>Interesting</li>
-        <li>New</li>
+        <li class='selected'><a href='?sort=popular'>Popular</a></li>
+        <li><a href='?sort=interesting'>Interesting</a></li>
+        <li><a href='?sort=new'>New</a></li>
       </ul>
 
       <ul id='filter'>
@@ -25,6 +26,9 @@
     </header>
     <section id='main'>
       <section id='tags'>
+        <div id='search'>
+          <input type='text' placeholder='Find tag...'>
+        </div>
         <ul>
           <li class='selected'>all</li>
           <li>client</li>
@@ -124,11 +128,12 @@
     <footer>
       <p class='tm'>Node.js is an official trademark of Joyent. This website is not formally 
       related to or endorsed by the official Joyent Node.js open source or commercial project.</p> 
-      <p class='links'>Created by corruptmem. 
+      <p class='links'><img src='images/chip.png' alt='corruptmem logo'> Created by corruptmem. 
         <a href='http://corruptmem.org'>Web</a> -
         <a href='mailto:me@corruptmem.org'>Email</a> - 
         <a href='http://github.com/corruptmem'>Github</a> - 
         <a href="http://twitter.com/corruptmem">Twitter</a></p>
     </footer>
+    </div>
   </body>
 </html>

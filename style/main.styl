@@ -1,13 +1,26 @@
-body
+body, html 
+  height 100%
+  padding 0
+  margin 0
+
+body, input
   font-family: "Exo", Helvetica, sans-serif;
+  
+body
   background url("../images/light_wool.png")
   margin 0
-  padding 0 0 200px 0
+  padding 0
+
+#container
+  min-height 100%
+  position relative
 
 .clearfix
   clear both
 
 header
+  position relative
+  z-index 2
   margin 0 auto
   width 1100px
   clear both
@@ -16,9 +29,13 @@ header
     font-weight 800
     font-size 28pt
     text-transform uppercase
-    margin 10px 0
-    padding 0
+    padding 10px 0 0 0
+    margin 0 
     text-align center
+    
+  a 
+    color black
+    text-decoration none
 
   ul
     font-weight 700
@@ -33,13 +50,19 @@ header
       padding 3px 12px      
       margin 0
 
+
   #page
     float left
     
     .selected
       background #f25d31
-      color white
-      text-shadow #511 1px 1px 2px
+      a
+        color white
+        text-shadow #511 1px 1px 2px
+
+    li:hover:not(.selected)
+      a
+        color: #f25d31 
 
   #filter
     float right
@@ -50,9 +73,12 @@ header
     li
       padding 9px 16px      
       margin 0
+      cursor pointer
+      &:hover:not(.selected)
+        color: #f25d31 
 
     .selected
-      background  -webkit-linear-gradient(rgba(255,255,255, 0.8), rgba(255,255,255,0.7)), url("../images/subtle_dots_orange.png")
+      background  -webkit-linear-gradient(rgba(255,255,255, 0.8), rgba(255,255,255,0.3)), url("../images/subtle_dots_orange.png")
       box-shadow #914028 0px 0px 8px;      
       border-top-left-radius 3px
       border-top-right-radius 3px
@@ -64,6 +90,7 @@ header
   position relative
   margin 0 auto
   width 1100px
+  padding-bottom: 150px
 
 #modules
   width 800px
@@ -79,6 +106,10 @@ header
     margin 0
     padding 10px 0
     background white
+    cursor pointer
+
+    &:hover
+      background #fff4ef
 
     &:not(:first-child)
       border-top 1px solid #ddd
@@ -112,8 +143,7 @@ header
         font-weight 200
 
 #tags
-  z-index: -1
-  background -webkit-linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.0)), url("../images/subtle_dots_orange.png")
+  background -webkit-linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.0)), url("../images/subtle_dots_orange.png")
   box-shadow #914028 0px 1px 7px
   border-radius 2px
   position absolute
@@ -121,7 +151,27 @@ header
   padding 10px
   top 0
   width 260px
+  text-align jusitfy
   overflow hidden
+
+  #search
+    padding 0 0 10px 0
+
+    input
+      color #914028  
+      border 1px solid #f9a48b
+      padding 7px
+      width 244px
+      font-weight bold
+      font-size 12pt
+
+      &::-webkit-input-placeholder
+        font-weight normal
+        color #f9a48b
+
+      &:focus
+        outline 1px solid #f9a48b
+
 
   ul
     list-style-type none
@@ -131,11 +181,25 @@ header
     li
       display inline-block
       font-size 12pt
-      padding 5px 8px
+      padding 3px 6px
+      margin 1px
+      border-radius 3px
+      cursor pointer
+      
+      &:hover:not(.selected)
+        text-shadow #fff 1px 1px 2px
+        background #fcb08a 
+
+      &.selected
+        background #f25d31
+        color white
+        text-shadow #511 1px 1px 2px
+        
 
 
 footer
-  position: fixed
+  //position: fixed
+  position: absolute
   bottom: 0
   left 0
   right 0
@@ -144,10 +208,13 @@ footer
   box-shadow rgba(0,0,0,0.2) 0 0 40px
   height: 60px
 
+  img 
+    vertical-align middle
+
   p
     margin 9px auto
     width 1100px
-    font-size 8pt
+    font-size 11px
     font-weight bold
 
   a
