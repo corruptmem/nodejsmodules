@@ -1,0 +1,232 @@
+body, html 
+  height 100%
+  padding 0
+  margin 0
+
+body, input
+  font-family: "Exo", Helvetica, sans-serif;
+  
+body
+  background url("../images/light_wool.png")
+  margin 0
+  padding 0
+
+#container
+  min-height 100%
+  position relative
+
+.clearfix
+  clear both
+
+header
+  position relative
+  z-index 2
+  margin 0 auto
+  width 1100px
+  clear both
+
+  h1 
+    font-weight 800
+    font-size 28pt
+    text-transform uppercase
+    padding 10px 0 0 0
+    margin 0 
+    text-align center
+    
+  a 
+    color black
+    text-decoration none
+
+  ul
+    font-weight 700
+    margin 0
+    padding 0 
+    text-transform uppercase
+    list-style-type none
+    font-size 15pt
+
+    li
+      display inline-block
+      padding 3px 12px      
+      margin 0
+
+
+  #page
+    float left
+    
+    .selected
+      background #f25d31
+      a
+        color white
+        text-shadow #511 1px 1px 2px
+
+    li:hover:not(.selected)
+      a
+        color: #f25d31 
+
+  #filter
+    float right
+    overflow hidden
+    padding: 5px 5px 0 5px
+    margin-top: -5px
+
+    li
+      padding 9px 16px      
+      margin 0
+      cursor pointer
+      &:hover:not(.selected)
+        color: #f25d31 
+
+    .selected
+      background  -webkit-linear-gradient(rgba(255,255,255, 0.8), rgba(255,255,255,0.3)), url("../images/subtle_dots_orange.png")
+      box-shadow #914028 0px 0px 8px;      
+      border-top-left-radius 3px
+      border-top-right-radius 3px
+
+      //box-shadow #562618 0px 0px 4px
+
+
+#main
+  position relative
+  margin 0 auto
+  width 1100px
+  padding-bottom: 150px
+
+#modules
+  width 800px
+  box-shadow #ccc 0px 2px 5px 2px
+
+  ol 
+    counter-reset item
+    list-style-type none
+    padding 0
+    margin 0 
+
+  li
+    margin 0
+    padding 10px 0
+    background white
+    cursor pointer
+
+    &:hover
+      background #fff4ef
+
+    &:not(:first-child)
+      border-top 1px solid #ddd
+
+    p, h3
+      margin 0
+
+    .num 
+      font-weight: 200
+      font-size 20pt
+      display inline-block
+      width 80px
+      text-align center
+      vertical-align middle
+
+    .num:before
+      content: "#"
+      padding-right 3px
+      font-size 13pt
+
+    .module-info
+      display inline-block
+      vertical-align middle
+
+      h3
+        font-size 18pt
+        font-weight 600
+      
+      p
+        font-size 15pt
+        font-weight 200
+
+#search 
+  display none
+
+#tags, #search
+  background -webkit-linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.0)), url("../images/subtle_dots_orange.png")
+  box-shadow #914028 0px 1px 7px
+  border-radius 2px
+  position absolute
+  right 0
+  padding 10px
+  top 0
+  width 260px
+  text-align jusitfy
+  overflow hidden
+
+  #searchTags, #searchSite
+    padding 0 0 10px 0
+
+    input
+      color #914028  
+      border 1px solid #f9a48b
+      padding 7px
+      width 244px
+      font-weight bold
+      font-size 12pt
+
+      &::-webkit-input-placeholder
+        font-weight normal
+        color #f9a48b
+
+      &:focus
+        outline 1px solid #f9a48b
+
+
+  ul
+    list-style-type none
+    margin 0
+    padding 0
+
+    li
+      display inline-block
+      font-size 12pt
+      padding 3px 6px
+      margin 1px
+      border-radius 3px
+      cursor pointer
+      
+      &:hover:not(.selected)
+        text-shadow #fff 1px 1px 2px
+        background #fcb08a 
+
+      &.selected
+        background #f25d31
+        color white
+        text-shadow #511 1px 1px 2px
+        
+
+
+footer
+  //position: fixed
+  position: absolute
+  bottom: 0
+  left 0
+  right 0
+  background: -webkit-linear-gradient(rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.5)), url("../images/lil_fiber.png")
+  border-top 1px solid #aaa
+  box-shadow rgba(0,0,0,0.2) 0 0 40px
+  height: 60px
+
+  img 
+    vertical-align middle
+
+  p
+    margin 9px auto
+    width 1100px
+    font-size 11px
+    font-weight bold
+
+  a
+    color #116
+
+  .tm 
+    color #444
+    text-shadow 1px 1px 1px #eee
+
+  .links
+    color #222
+    text-shadow 1px 1px 1px #ccc
