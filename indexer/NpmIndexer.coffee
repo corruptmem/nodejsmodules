@@ -30,6 +30,7 @@ class NpmIndexer
     
     obj.description = json.description if json.description?
     obj.author = json.author if json.author?
+    obj.lastIndexed = new Date()
 
     latestVersionNumber = json?["dist-tags"]?.latest
 
