@@ -31,7 +31,7 @@ sigmoid = (max, growth, x) -> max * ((2/(1+Math.exp(-growth*2*x)))-1)
 
 days = (ms) -> ms/(24*60*60*1000)
 
-githubInterest = (doc) -> if doc.github?.exists then sigmoid(25, 0.01, doc.github.stars) + sigmoid(75, 0.01, doc.github.forks) else 0
+githubInterest = (doc) -> if doc.github?.exists then sigmoid(75, 0.01, doc.github.stars) + sigmoid(25, 0.01, doc.github.forks) else 0
 
 githubFreshness = (doc) ->
   if not doc.github?.exists

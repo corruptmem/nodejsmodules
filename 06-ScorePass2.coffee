@@ -29,45 +29,7 @@ mongoose.connect(config.mongodb)
 gompertz = (max, xdisp, growth, x) -> max * Math.exp(-xdisp*Math.exp(-growth * x))
 sigmoid = (max, growth, x) -> max * ((2/(1+Math.exp(-growth*2*x)))-1)
 
-days = (ms) -> ms/(24*60*60*1000)
-
-githubInterest = (doc) -> if doc.github?.exists then sigmoid(25, 0.01, doc.github.stars) + sigmoid(75, 0.01, doc.github.forks) else 0
-
-githubFreshness = (doc) ->
-  if not doc.github?.exists
-    return 0
-
-  difference = days(doc.github.lastIndexed - doc.github.lastPush)
-  100 - gompertz(100, 5, 0.01, difference)
-
-npmFreshness = (doc) ->
-  recentVersion = doc.orderedVersions[-1..][0]
-  difference = days(doc.lastIndexed - recentVersion.time)
-  100 - gompertz(100, 5, 0.01, difference)
-
-npmMaturity = (doc) ->
-  earliestVersion = doc.orderedVersions[0]
-  difference = days(doc.lastIndexed - earliestVersion.time)
-  gompertz(100, 5, 0.01, difference)
-
-npmNewness = (doc) -> 100 - npmMaturity(doc)
-
-npmFrequency = (doc) ->
-  earliestVersion = doc.orderedVersions[0]
-  difference = days(doc.lastIndexed - earliestVersion.time)
-  count = doc.orderedVersions.length
-  cpy = (count / difference) * 365
-
-  gompertz(100, 6, 0.15, cpy)
-
-preprocess = (doc) ->
-  doc.orderedVersions = _.sortBy(doc.versions, 'time')
-  if doc.orderedVersions.length == 0
-    return false
-
-  return true
-
-docs = {}
+rescale = (val, growth) -> sigmoid(100, growth, val)
 
 waiting = 1
 
@@ -80,11 +42,19 @@ exitIfDone = (error) =>
     mongoose.connection.close()
 
 metrics = ["githubInterest", "githubFreshness", "npmFreshness", "npmMaturity", "npmNewness", "npmFrequency"]
+growth = {
+  "depGithubInterest": 0.0001,
+  "depGithubFreshness": 0.00001,
+  "depNpmFreshness": 0.00001,
+  "depNpmMaturity": 0.00001,
+  "depNpmNewness": 0.00001,
+  "depNpmFrequency": 0.00001,
+}
 depMetrics = ("dep" + metric[0].toUpperCase() + metric[1..] for metric in metrics)
 
-stream = NpmPackage.find({"id": "coffee-script"}).sort({"$natural": -1}).stream()
+stream = NpmPackage.find().sort({"$natural": -1}).stream()
 stream.on('data', (doc) =>
-  console.log("Processing #{doc.id}...")
+  console.log("Processing #{doc.id} (waiting #{waiting})...")
 
   rdeps = {}
   for rdep in doc.reverseDependencies
@@ -95,17 +65,16 @@ stream.on('data', (doc) =>
 
   NpmPackage.find({"id": {"$in": (rdep.id for rdep in doc.reverseDependencies)}}, {"id": 1, "metrics": 1}).exec((err, rdocs) =>
     for rdoc in rdocs
-      ratio = 1/rdeps[rdoc.id].distance
+      ratio = 1/Math.pow(rdeps[rdoc.id].distance,2)
       for metric, n in metrics
         depMetric = depMetrics[n]
-        if not isNaN(rdoc.metrics[metric])
-          doc.metrics[depMetric] += rdoc.metrics[metric] * ratio
-        else
-          console.log(rdoc.id)
+        doc.metrics[depMetric] += rdoc.metrics[metric] * ratio unless isNaN(rdoc.metrics[metric])
 
-    console.log("Saving")
-    console.log(doc.metrics)
-    doc.save(exitIfDone)
+    for depMetric in depMetrics
+      doc.metrics[depMetric] = rescale(doc.metrics[depMetric], growth[depMetric])
+
+    doc.save(() =>
+      exitIfDone())
   )
 
   waiting += 1
