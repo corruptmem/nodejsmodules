@@ -71,9 +71,12 @@ docs = {}
 
 waiting = 1
 
-exitIfDone = () =>
+exitIfDone = (error) =>
+  if error
+    console.error(error)
   waiting -= 1
   if(waiting == 0)
+    console.log("Closing.")
     mongoose.connection.close()
 
 metrics = ["githubInterest", "githubFreshness", "npmFreshness", "npmMaturity", "npmNewness", "npmFrequency"]
@@ -94,11 +97,18 @@ stream.on('data', (doc) =>
     for rdoc in rdocs
       ratio = 1/rdeps[rdoc.id].distance
       for metric, n in metrics
-        doc.metrics[depMetric] += rdoc.metrics[metric] * ratio
+        depMetric = depMetrics[n]
+        if not isNaN(rdoc.metrics[metric])
+          doc.metrics[depMetric] += rdoc.metrics[metric] * ratio
+        else
+          console.log(rdoc.id)
 
+    console.log("Saving")
+    console.log(doc.metrics)
     doc.save(exitIfDone)
-    waiting += 1
   )
+
+  waiting += 1
 )
 
 stream.on('error', (error) =>

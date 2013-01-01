@@ -76,7 +76,7 @@ exitIfDone = () =>
   if(waiting == 0)
     mongoose.connection.close()
 
-stream = NpmPackage.find().sort({"$natural": -1}).stream()
+stream = NpmPackage.find({"id": "workhorse"}).sort({"$natural": -1}).stream()
 stream.on('data', (doc) =>
   console.log("Processing #{doc.id}...")
 
@@ -88,15 +88,13 @@ stream.on('data', (doc) =>
     npmFrequency: 0
   }
 
-  if not preprocess(doc)
-    return
-
-  doc.metrics.githubInterest = githubInterest(doc)
-  doc.metrics.githubFreshness = githubFreshness(doc)
-  doc.metrics.npmFreshness = npmFreshness(doc)
-  doc.metrics.npmMaturity = npmMaturity(doc)
-  doc.metrics.npmNewness = npmNewness(doc)
-  doc.metrics.npmFrequency = npmFrequency(doc)
+  if preprocess(doc)
+    doc.metrics.githubInterest = githubInterest(doc)
+    doc.metrics.githubFreshness = githubFreshness(doc)
+    doc.metrics.npmFreshness = npmFreshness(doc)
+    doc.metrics.npmMaturity = npmMaturity(doc)
+    doc.metrics.npmNewness = npmNewness(doc)
+    doc.metrics.npmFrequency = npmFrequency(doc)
 
   doc.save(exitIfDone)
   waiting += 1
