@@ -56,6 +56,7 @@ class NpmIndexer
       id: json.name
     }
 
+
     obj.description = json.description if json.description?
     obj.author = json.author if json.author?
     obj.lastIndexed = new Date()
@@ -77,6 +78,15 @@ class NpmIndexer
       obj.dependencies = if latestVersion.dependencies? then Object.keys(latestVersion.dependencies) else []
       obj.devDependencies = if latestVersion.devDependencies? then Object.keys(latestVersion.devDependencies) else []
       obj.latestVersion = latestVersionNumber
+
+      if latestVersion._npmUser?.email?
+        obj.owner = latestVersion._npmUser.email
+      else if latestVersion.maintainers?.length? >= 1 and latestVersion.maintainers[0].email?
+        obj.owner = latestVersion.maintainers[0].email
+      else if latestVersion.author?.email?
+        obj.owner = latestVersion.author.email
+      else if json.author?.email?
+        obj.owner = json.author.email
 
     obj.versions = ({id: key, time: new Date(val)} for key, val of json.time)
 

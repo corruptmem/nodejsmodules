@@ -8,7 +8,7 @@ mongoose.connect(config.mongodb)
 
 indexer = new NpmIndexer()
 
-#indexer.indexPackage('uglify-js', (error) =>
+#indexer.indexPackage('coffee-script', (error) =>
 indexer.indexAll((error) =>
   if error?
     console.error(error)

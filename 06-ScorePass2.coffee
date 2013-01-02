@@ -49,7 +49,7 @@ growth = {
   "depNpmMaturity": 0.00001,
   "depNpmNewness": 0.00001,
   "depNpmFrequency": 0.00001,
-  "depNpmInterest": 0.00001,
+  "depNpmInterest": 0.0001,
 }
 depMetrics = ("dep" + metric[0].toUpperCase() + metric[1..] for metric in metrics)
 

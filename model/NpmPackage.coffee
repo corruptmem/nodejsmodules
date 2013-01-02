@@ -10,6 +10,7 @@ schema = mongoose.Schema({
     url: String
   },
   author: { name: String, email: String },
+  owner: String, # email for NPM owner
   dependencies: [ String ],
   devDependencies: [ String ],
   versions: [ {id: String, time: Date} ]
@@ -39,6 +40,7 @@ schema = mongoose.Schema({
     depNpmInterest: Number
     
     # pass 3
+    authorTotal: Number
     authorGithubInterest: Number
     authorGithubFreshness: Number
     authorNpmFreshness: Number
@@ -46,8 +48,6 @@ schema = mongoose.Schema({
     authorNpmMaturity: Number
     authorNpmFrequency: Number
     authorNpmInterest: Number
-
-    # pass 2
     authorDepGithubInterest: Number
     authorDepGithubFreshness: Number
     authorDepNpmFreshness: Number
@@ -55,6 +55,22 @@ schema = mongoose.Schema({
     authorDepNpmNewness: Number
     authorDepNpmFrequency: Number
     authorDepNpmInterest: Number
+    
+    ghOwnerTotal: Number
+    ghOwnerGithubInterest: Number
+    ghOwnerGithubFreshness: Number
+    ghOwnerNpmFreshness: Number
+    ghOwnerNpmNewness: Number
+    ghOwnerNpmMaturity: Number
+    ghOwnerNpmFrequency: Number
+    ghOwnerNpmInterest: Number
+    ghOwnerDepGithubInterest: Number
+    ghOwnerDepGithubFreshness: Number
+    ghOwnerDepNpmFreshness: Number
+    ghOwnerDepNpmMaturity: Number
+    ghOwnerDepNpmNewness: Number
+    ghOwnerDepNpmFrequency: Number
+    ghOwnerDepNpmInterest: Number
 
     # pass 3
     popularScore: Number
