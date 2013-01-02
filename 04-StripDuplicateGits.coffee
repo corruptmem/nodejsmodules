@@ -7,12 +7,13 @@ config = require('./config')
 mongoose.connect(config.mongodb)
 
 score = (doc) =>
-  return doc.reverseDependencies.length
+  return doc.downloads.total
 
 stripDuplicates = (list, callback) =>
+  console.log(list)
   NpmPackage.find({"id": {"$in": list}}).sort("id").exec((error, docs) =>
     if(error)
-      return callback(error)
+      process.nextTick(() => callback(error))
 
     max = -1
     maxDoc = null
@@ -53,6 +54,9 @@ NpmPackage.aggregate(
 
 
     waiting = docs.length
+
+    if docs.length == 0
+      mongoose.connection.close()
 
     for doc in docs
       stripDuplicates(doc.docs, (error) =>

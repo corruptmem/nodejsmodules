@@ -41,7 +41,7 @@ exitIfDone = (error) =>
     console.log("Closing.")
     mongoose.connection.close()
 
-metrics = ["githubInterest", "githubFreshness", "npmFreshness", "npmMaturity", "npmNewness", "npmFrequency"]
+metrics = ["githubInterest", "githubFreshness", "npmFreshness", "npmMaturity", "npmNewness", "npmFrequency", "npmInterest"]
 growth = {
   "depGithubInterest": 0.0001,
   "depGithubFreshness": 0.00001,
@@ -49,6 +49,7 @@ growth = {
   "depNpmMaturity": 0.00001,
   "depNpmNewness": 0.00001,
   "depNpmFrequency": 0.00001,
+  "depNpmInterest": 0.00001,
 }
 depMetrics = ("dep" + metric[0].toUpperCase() + metric[1..] for metric in metrics)
 

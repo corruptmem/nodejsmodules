@@ -14,7 +14,11 @@ schema = mongoose.Schema({
   devDependencies: [ String ],
   versions: [ {id: String, time: Date} ]
   reverseDependencies: [ {id: String, distance: Number} ]
-  lastIndexed: Date,
+  lastIndexed: Date
+  downloads: {
+    total: Number
+    month: Number
+  }
   metrics: {
     # pass 1
     githubInterest: Number
@@ -23,6 +27,7 @@ schema = mongoose.Schema({
     npmNewness: Number
     npmMaturity: Number
     npmFrequency: Number
+    npmInterest: Number
 
     # pass 2
     depGithubInterest: Number
@@ -31,13 +36,29 @@ schema = mongoose.Schema({
     depNpmMaturity: Number
     depNpmNewness: Number
     depNpmFrequency: Number
+    depNpmInterest: Number
+    
+    # pass 3
+    authorGithubInterest: Number
+    authorGithubFreshness: Number
+    authorNpmFreshness: Number
+    authorNpmNewness: Number
+    authorNpmMaturity: Number
+    authorNpmFrequency: Number
+    authorNpmInterest: Number
+
+    # pass 2
+    authorDepGithubInterest: Number
+    authorDepGithubFreshness: Number
+    authorDepNpmFreshness: Number
+    authorDepNpmMaturity: Number
+    authorDepNpmNewness: Number
+    authorDepNpmFrequency: Number
+    authorDepNpmInterest: Number
 
     # pass 3
     popularScore: Number
     interestingScore: Number
-
-    # pass 4
-    githubAuthorScore: Number
     newScore: Number
 
   }

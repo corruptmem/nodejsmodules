@@ -56,8 +56,6 @@ class NpmIndexer
       id: json.name
     }
 
-    console.log(downloads.rows.length)
-    
     obj.description = json.description if json.description?
     obj.author = json.author if json.author?
     obj.lastIndexed = new Date()
@@ -81,6 +79,19 @@ class NpmIndexer
       obj.latestVersion = latestVersionNumber
 
     obj.versions = ({id: key, time: new Date(val)} for key, val of json.time)
+
+    obj.downloads = {
+      total: 0
+      month: 0
+    }
+
+    monthAgo = new Date(obj.lastIndexed)
+    monthAgo.setMonth(monthAgo.getMonth()-1)
+
+    for dl in downloads.rows
+      obj.downloads.total += dl.value
+      if new Date(dl.key[1]) >= monthAgo
+        obj.downloads.month += dl.value
     
     return obj
 

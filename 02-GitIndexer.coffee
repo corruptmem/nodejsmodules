@@ -82,7 +82,9 @@ class GitIndexer
     )
 
   fillAll: (callback) =>
-    NpmPackage.find({"repository.type": "git"}).sort({"github.lastIndexed": 1}).limit(4900).exec((err, docs) =>
+    NpmPackage.find({"repository.type": "git"}).sort({"github.lastIndexed": 1}).limit(1000).exec((err, docs) =>
+      if err?
+        return callback(err)
       pending = docs.length
       for doc in docs
         ((doc) =>
@@ -103,4 +105,6 @@ class GitIndexer
 
 mongodb = mongoose.connect(config.mongodb)
 gi = new GitIndexer()
-gi.fillAll(() => mongoose.connection.close())
+gi.fillAll((err) =>
+  console.log(err) if err?
+  mongoose.connection.close())

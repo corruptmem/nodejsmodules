@@ -18,6 +18,7 @@ mongoose.connect(config.mongodb)
 # npmNewness: max - npmMaturity # max: 100, decay: 0.01, xdisp: 5
 # npmMaturity: gompertz(max, xdisp, decay, days(npmLastIndexed - firstVersion)) # max: 100, decay: 0.01, xdisp: 5 
 # npmFrequency: gompertz(max, xdisp, decay, commitsPerYearBetween(npmLastIndexed, firstCommit) # max 100, decay: 0.15, xdisp: 6
+# npmInterest: 0.5*sigmoid(0.000006, downloads.total) + 0.5*sigmoid(0.00004,downloads.month)
 #
 # authorScore: sum
 #
@@ -60,6 +61,9 @@ npmFrequency = (doc) ->
 
   gompertz(100, 6, 0.15, cpy)
 
+
+npmInterest = (doc) -> sigmoid(50, 0.000006, doc.downloads.total) + sigmoid(50, 0.00004, doc.downloads.month)
+
 preprocess = (doc) ->
   doc.orderedVersions = _.sortBy(doc.versions, 'time')
   if doc.orderedVersions.length == 0
@@ -76,17 +80,17 @@ exitIfDone = () =>
   if(waiting == 0)
     mongoose.connection.close()
 
-stream = NpmPackage.find({"id": "workhorse"}).sort({"$natural": -1}).stream()
+stream = NpmPackage.find().sort({"$natural": -1}).stream()
 stream.on('data', (doc) =>
   console.log("Processing #{doc.id}...")
 
-  doc.metrics = {
-    githubInterest: 0,
-    githubFreshness: 0,
-    npmFreshness: 0,
-    npmNewness: 0,
-    npmFrequency: 0
-  }
+  doc.metrics = {} unless doc.metrics?
+  doc.metrics.githubInterest = 0
+  doc.metrics.githubFreshness = 0
+  doc.metrics.npmFreshness = 0
+  doc.metrics.npmNewness = 0
+  doc.metrics.npmFrequency = 0
+  doc.metrics.npmInterest = 0
 
   if preprocess(doc)
     doc.metrics.githubInterest = githubInterest(doc)
@@ -95,6 +99,7 @@ stream.on('data', (doc) =>
     doc.metrics.npmMaturity = npmMaturity(doc)
     doc.metrics.npmNewness = npmNewness(doc)
     doc.metrics.npmFrequency = npmFrequency(doc)
+    doc.metrics.npmInterest = npmInterest(doc)
 
   doc.save(exitIfDone)
   waiting += 1
