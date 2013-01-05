@@ -98,4 +98,11 @@ schema = mongoose.Schema({
   }
 })
 
+schema.index({"id": 1}, {unique: true})
+schema.index({"owner": 1})
+schema.index({"keywords": 1})
+schema.index({"metrics.newScore": 1})
+schema.index({"metrics.interestingScore": 1})
+schema.index({"metrics.popularScore": 1})
+
 module.exports = mongoose.model('NpmPackage', schema)
