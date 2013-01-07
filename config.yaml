@@ -1,1 +1,4 @@
 mongodb: "mongodb://localhost/npm"
+
+web:
+  port: 3000
