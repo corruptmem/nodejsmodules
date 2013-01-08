@@ -4,48 +4,40 @@ html
     meta(charset='utf-8')
     title Hello World
     != css('main')
-    link(href='http://fonts.googleapis.com/css?family=Exo:200,400,600,800', rel='stylesheet', type='text/css')
-  body
+    link(href='http://fonts.googleapis.com/css?family=Cabin|Exo:200,400,600,800', rel='stylesheet', type='text/css')
+  body(data-type=currentType, data-tag=currentTag)
     div#container
       header
         h1 Node.JS Modules
 
         ul#page
-          li(class=(currentType=='popular'?'selected':''))
-            a(href='/popular/tags/#{currentTag}') Popular
-          li(class=(currentType=='interesting'?'selected':''))
-            a(href='/interesting/tags/#{currentTag}') Interesting
-          li(class=(currentType=='new'?'selected':''))
-            a(href='/new/tags/#{currentTag}') New
+          li(data-val='popular', class='type-b selectable ' + (currentType=='popular'?'selected':''))
+            a.type(href=home_index_link('popular', currentTag)) Popular
+          li(data-val='interesting', class='type-b selectable ' + (currentType=='interesting'?'selected':''))
+            a.type(href=home_index_link('interesting', currentTag)) Interesting
+          li(data-val='new', class='type-b selectable ' + (currentType=='new'?'selected':''))
+            a.type(href=home_index_link('new', currentTag)) New
 
         ul#filter
+          //- li Search
           li.selected Tags
-          li Search
 
         div.clearfix
 
       section#main
         section#tags
-          div#searchTags
-            input(type='text', placeholder='Find tag...')
+          //- div#searchTags
+          //-  input(type='text', placeholder='Find tag...')
           ul
             each tag in tags
-              li(class=(currentTag==tag?'selected':''))
-                a(href='/#{currentType}/tags/#{tag}')= tag
+              li(data-val=tag, class='tag-b selectable ' + (currentTag==tag?'selected':''))
+                a.tag(href=home_index_link(currentType, tag))= tag
       
         section#search
           div#searchSite
             input(type='text', placeholder='Find...')
 
-        section#modules
-          ol
-            each module, k in modules
-              li(title=module.id + ": " + module.description)
-                h3.num= k + 1
-                div.module-info
-                  h3= module.id
-                  p= module.description
-
+        block content
       footer
         p.tm Node.js is an official trademark of Joyent. This website is not formally related to or endorsed by the official Joyent Node.js open source or commercial project.
         p.links
@@ -59,4 +51,5 @@ html
           |  - 
           a(href='http://twitter.com/corruptmem') Twitter
 
-
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+    != js('main')

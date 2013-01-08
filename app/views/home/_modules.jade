@@ -1,0 +1,14 @@
+section#modules
+  ol
+    each module, k in modules
+      li(title=module.id + ": " + module.description)
+        h3.pos
+          div.num= k + 1
+          div.score= module.score.toFixed(1) + " %"
+        div.module-info
+          h3= module.id
+            //- span.by  by 
+            //-  = module.owner
+          p= module.description
+        div.gravatar
+          img(src=module.ownerGravatar)

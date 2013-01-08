@@ -10,6 +10,7 @@ app = express()
 app.set 'views', __dirname + '/app/views'
 app.set 'view engine', 'jade'
 
+app.locals(require './helpers/links')
 
 app.configure =>
   app.use express.bodyParser()

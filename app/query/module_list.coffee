@@ -13,4 +13,4 @@ module.exports = (type, keyword, callback) =>
       metrics: 1
       description: 1
     
-    NpmPackage.find(filter, select).sort(sort).limit(15).exec callback
+    NpmPackage.find(filter, select).sort(sort).limit(15).lean().exec callback

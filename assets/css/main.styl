@@ -22,7 +22,8 @@ header
   position relative
   z-index 2
   margin 0 auto
-  width 1100px
+  width 1105px
+  padding-left 5px
   clear both
 
   h1 
@@ -66,12 +67,17 @@ header
 
   #filter
     float right
+
+    .by 
+      font-weight 400
+      color #aaa
     overflow hidden
     padding: 5px 5px 0 5px
     margin-top: -5px
 
     li
-      padding 9px 16px      
+      padding 9px 16px 9px 16px      
+      z-index 1
       margin 0
       cursor pointer
       &:hover:not(.selected)
@@ -107,6 +113,7 @@ header
     padding 10px 0
     background white
     cursor pointer
+    position relative
 
     &:hover
       background #fff4ef
@@ -117,7 +124,7 @@ header
     p, h3
       margin 0
 
-    .num 
+    .pos 
       font-weight: 200
       font-size 20pt
       display inline-block
@@ -125,10 +132,15 @@ header
       text-align center
       vertical-align middle
 
-    .num:before
-      content: "#"
-      padding-right 3px
-      font-size 13pt
+      .num:before
+        content: "#"
+        padding-right 3px
+        font-size 13pt
+
+      .score
+        font-weight 400
+        color #aaa
+        font-size 9pt
 
     .module-info
       display inline-block
@@ -137,6 +149,10 @@ header
       h3
         font-size 18pt
         font-weight 600
+
+        .by 
+          font-weight 400
+          color #aaa
       
       p
         font-size 15pt
@@ -146,6 +162,21 @@ header
         overflow hidden
         white-space nowrap
         text-overflow ellipsis
+
+    .gravatar
+      position absolute
+      right 0
+      top 0
+      bottom 0
+
+      img
+        height 100%
+        opacity 0.3
+        width 79px
+    &:hover
+      .gravatar
+        img
+          opacity 0.9
 
 #search 
   display none
