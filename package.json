@@ -2,6 +2,7 @@
   "name": "njsm",
   "version": "0.0.1",
   "dependencies": {
+    "seq": "0.3.5",
     "winston": "0.6.2",
     "underscore": "1.4.3",
     "request": "2.12.0",
@@ -10,6 +11,9 @@
     "express": "3.0.6",
     "stylus": "0.32.0",
     "gravatar": "1.0.6",
-    "nib": "0.9.1"
+    "nib": "0.9.1",
+    "jade": "0.27.7",
+    "connect-assets": "2.3.3",
+    "coffee-script": "1.4.0"
   }
 }

@@ -1,12 +1,13 @@
 require 'js-yaml'
 express = require 'express'
-stylus = require 'stylus'
-nib = require 'nib'
+mongoose = require 'mongoose'
 
 config = require './config'
 
+mongoose.connect(config.mongodb)
+
 app = express()
-app.set 'views', __dirname + 'app/views'
+app.set 'views', __dirname + '/app/views'
 app.set 'view engine', 'jade'
 
 
@@ -14,15 +15,7 @@ app.configure =>
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use app.router
-  app.use stylus.middleware {
-    src: "#{__dirname}/app"
-    dest: "#{__dirname}/public"
-    compile: (str, path) =>
-      stylus(str)
-        .set('filename', path)
-        .set('compress', false)
-        .use(nib())
-  }
+  app.use(require('connect-assets')())
   app.use express.static __dirname + "/public"
 
 app.configure 'development', =>
