@@ -1,3 +1,5 @@
+@import 'nib'
+
 body, html 
   height 100%
   padding 0
@@ -84,7 +86,7 @@ header
         color: #f25d31 
 
     .selected
-      background  -webkit-linear-gradient(rgba(255,255,255, 0.8), rgba(255,255,255,0.3)), url("../images/subtle_dots_orange.png")
+      background  linear-gradient(rgba(255,255,255, 0.8), rgba(255,255,255,0.3)), url("../images/subtle_dots_orange.png")
       box-shadow #914028 0px 0px 8px;      
       border-top-left-radius 3px
       border-top-right-radius 3px
@@ -93,6 +95,7 @@ header
 
 
 #main
+  perspective: 7000;
   position relative
   margin 0 auto
   width 1100px
@@ -101,6 +104,18 @@ header
 #modules
   width 800px
   box-shadow #ccc 0px 2px 5px 2px
+  position relative
+  transition opacity 0.2s ease-out, transform 0.2s ease-out
+  opacity 1
+
+  &.exit
+    transform rotateY(90deg)
+    opacity 0
+    transition opacity 0.2s ease-in, transform 0.2s ease-in
+
+  &.enter
+    transform rotateY(-90deg)
+    opacity 0
 
   ol 
     counter-reset item
@@ -178,11 +193,20 @@ header
         img
           opacity 0.9
 
+  .loading
+    position absolute
+    left 0
+    right 0
+    top 0
+    bottom 0
+    opacity 1
+    background rgba(255,255,255, 0.8)
+
 #search 
   display none
 
 #tags, #search
-  background -webkit-linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.0)), url("../images/subtle_dots_orange.png")
+  background linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.0)), url("../images/subtle_dots_orange.png")
   box-shadow #914028 0px 1px 7px
   border-radius 2px
   position absolute
@@ -246,7 +270,7 @@ footer
   bottom: 0
   left 0
   right 0
-  background: -webkit-linear-gradient(rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.5)), url("../images/lil_fiber.png")
+  background: linear-gradient(rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.5)), url("../images/lil_fiber.png")
   border-top 1px solid #aaa
   box-shadow rgba(0,0,0,0.2) 0 0 40px
   height: 60px

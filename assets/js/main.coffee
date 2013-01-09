@@ -9,9 +9,7 @@ home_index_link = (type, tag) ->
 
   return link
 
-load_index = (type, tag, push) ->
-  console.log "Loading #{type} #{tag} (push state: #{push})"
-
+load_index = (type, tag, push, load) ->
   if not type?
     type = $('body').data('type')
 
@@ -29,21 +27,45 @@ load_index = (type, tag, push) ->
   url = home_index_link(type, tag)
   
   window.history.pushState { type: type, tag: tag }, "", url if push
+  console.log(load)
+  return unless load
+
+  $('#modules').addClass('exit')
+
+  replace = null
+  run = false
+
+  setTimeout (->
+    replace() if replace?
+    run = true), 400
+
   
   $.get url + ".partial", (content) ->
-    $('#modules').replaceWith content
+    replace = () ->
+      $('#modules').remove()
+      $('#main').append(content)
+      modules = $('#modules')
+      modules.addClass('enter')
+      
+      # force the style to be recalculated for the transition: 
+      # http://stackoverflow.com/questions/3969817/css3-transitions-to-dynamically-created-elements
+      window.getComputedStyle(modules.get(0)).getPropertyValue('top')
+      modules.removeClass 'enter'
+
+    replace() if run
+
 
 window.onpopstate = (state) ->
   if not state.state?
-    console.log("Replacing initial state.")
     window.history.replaceState { type: $('body').data('type'), tag: $('body').data('tag') }, "", window.location
-  load_index state.state.type, state.state.tag, false if state.state?
+  else
+    load_index state.state?.type, state.state?.tag, true, true
 
 $ ->
   $('a.tag').click (evt) ->
     $this = $ this
     tag = $this.text()
-    load_index undefined, tag, true
+    load_index undefined, tag, true, true
 
 
     evt.stopPropagation()
@@ -52,7 +74,7 @@ $ ->
   $('a.type').click (evt) ->
     $this = $ this
     type = $this.text().toLowerCase()
-    load_index type, undefined, true
+    load_index type, undefined, true, true
 
     evt.stopPropagation()
     evt.preventDefault()
