@@ -1,0 +1,29 @@
+extends ../layout
+block header
+  h2= locals.id
+
+block content
+  h3= locals.latestVersion
+  p= locals.description
+
+  div
+    b URL: 
+    a(href=locals.url)= locals.url
+
+  div
+    b Owner: 
+    span= locals.owner
+
+  h3 Tags
+  ul
+    each keyword in locals.keywords
+      li= keyword
+
+  h3 Downloads
+  ul
+    li
+      b Month: 
+      span= locals.downloads.month
+    li
+      b Total: 
+      span= locals.downloads.total

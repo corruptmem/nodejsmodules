@@ -10,11 +10,17 @@ home_index_link = (type, tag) ->
   return link
 
 load_index = (type, tag, push, load) ->
+  existingType = $('body').data('type')
+  existingTag = $('body').data('tag')
+
+  if existingType == type and existingTag == tag
+    return
+
   if not type?
-    type = $('body').data('type')
+    type = existingType
 
   if not tag?
-    tag = $('body').data('tag')
+    tag = existingTag
   
   $('body').data 'type', type
   $('body').data 'tag', tag
@@ -27,7 +33,6 @@ load_index = (type, tag, push, load) ->
   url = home_index_link(type, tag)
   
   window.history.pushState { type: type, tag: tag }, "", url if push
-  console.log(load)
   return unless load
 
   $('#modules').addClass('exit')
@@ -56,12 +61,17 @@ load_index = (type, tag, push, load) ->
 
 
 window.onpopstate = (state) ->
+  console.log(state.state)
   if not state.state?
+    console.log("Replace")
     window.history.replaceState { type: $('body').data('type'), tag: $('body').data('tag') }, "", window.location
   else
-    load_index state.state?.type, state.state?.tag, true, true
+    load_index state.state?.type, state.state?.tag, false, true
 
 $ ->
+  $('body').on 'click', 'li[href]', (evt) ->
+    window.location = $(this).attr('href')
+
   $('a.tag').click (evt) ->
     $this = $ this
     tag = $this.text()

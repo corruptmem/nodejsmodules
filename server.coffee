@@ -1,6 +1,7 @@
 require 'js-yaml'
 express = require 'express'
 mongoose = require 'mongoose'
+expressParams = require 'express-params'
 
 config = require './config'
 
@@ -11,6 +12,8 @@ app.set 'views', __dirname + '/app/views'
 app.set 'view engine', 'jade'
 
 app.locals(require './helpers/links')
+
+expressParams.extend(app)
 
 app.configure =>
   app.use express.bodyParser()

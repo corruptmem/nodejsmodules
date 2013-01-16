@@ -5,6 +5,8 @@ module.exports = (type, keyword, callback) =>
     sort["metrics." + type + "Score"] = -1
     filter = if keyword? and keyword.length > 0 and keyword != 'all' then {"keywords": keyword} else {}
     
+    console.log filter
+
     select =
       id: 1
       owner: 1
