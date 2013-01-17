@@ -12,7 +12,9 @@ class HomeController
     tag = req.param "tag"
     type = type[0]
     tag = tag[0] if tag? and tag.length > 0
-    console.log(type, tag)
+
+
+    viewdata.title = "#{type[0].toUpperCase()}#{type[1..]} #{if tag? then tag else ""} modules"
 
     format = req.param 'format'
 
@@ -52,7 +54,8 @@ class HomeController
 
       if doc.length == 0
         return res.send(404, "Not found")
-
+      
+      @attachGravatars(doc)
       doc = doc[0]
       doc.currentType = null
       doc.currentTag = null
@@ -75,7 +78,7 @@ class HomeController
 
   attachGravatars: (mods) ->
     for mod in mods
-      mod.ownerGravatar =  gravatar.url(mod.owner ? 'nobody@example.com', { s: 120 })
+      mod.ownerGravatar =  gravatar.url(mod.owner ? 'nobody@example.com', { s: 120, d: "retro" })
 
   @setup: (app) =>
     my = new HomeController()

@@ -31,8 +31,10 @@ load_index = (type, tag, push, load) ->
   $(".selectable.type-b[data-val=#{type}]").addClass('selected')
   
   url = home_index_link(type, tag)
-  
+
   window.history.pushState { type: type, tag: tag }, "", url if push
+  document.title = "#{type[0].toUpperCase()}#{type[1..]} #{if tag? and tag != "all" then tag else ""} modules - Node.JS Modules"
+
   return unless load
 
   $('#modules').addClass('exit')
@@ -73,6 +75,9 @@ $ ->
     window.location = $(this).attr('href')
 
   $('a.tag').click (evt) ->
+    if evt.which != 1 or evt.metaKey or evt.ctrlKey
+      return
+
     $this = $ this
     tag = $this.text()
     load_index undefined, tag, true, true
@@ -82,6 +87,9 @@ $ ->
     evt.preventDefault()
   
   $('a.type').click (evt) ->
+    if evt.which != 1 or evt.metaKey or evt.ctrlKey
+      return
+
     $this = $ this
     type = $this.text().toLowerCase()
     load_index type, undefined, true, true

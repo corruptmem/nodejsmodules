@@ -1,29 +1,40 @@
 extends ../layout
 block header
-  h2= locals.id
 
 block content
-  h3= locals.latestVersion
-  p= locals.description
+  section#moduleInfo
+    div.owner
+      a(href="mailto:" + locals.owner)
+        img(src=locals.ownerGravatar)
 
-  div
-    b URL: 
-    a(href=locals.url)= locals.url
+    h2
+      span.id= locals.id 
+      span.v= locals.latestVersion
 
-  div
-    b Owner: 
-    span= locals.owner
+    p.desc #{locals.description} 
+    
+    p.link
+      a(href=locals.url) #{locals.url}
 
-  h3 Tags
-  ul
-    each keyword in locals.keywords
-      li= keyword
+    p.npm
+      span.shell $ 
+      | npm install #{locals.id}
 
-  h3 Downloads
-  ul
-    li
-      b Month: 
-      span= locals.downloads.month
-    li
-      b Total: 
-      span= locals.downloads.total
+    if locals.github
+      h3.githubTitle github
+      section.github
+        p
+          iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=watch&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
+        p
+          iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=fork&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
+        p
+          a(href=locals.github.url) #{locals.github.url}
+    
+    h3.tags tags
+    ul.tags
+      each keyword in locals.keywords
+        li.tag= keyword
+
+    h3.npmlink NPM repository
+    p.npmlink
+      a(href="https://npmjs.org/package/" + locals.id)= locals.id

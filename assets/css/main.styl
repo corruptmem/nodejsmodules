@@ -5,6 +5,12 @@ body, html
   padding 0
   margin 0
 
+a:link
+  color #c44
+
+a:visited
+  color #a66
+
 body, input
   font-family: "Exo", Helvetica, sans-serif;
   
@@ -28,10 +34,9 @@ header
   padding-left 5px
   clear both
 
-  padding-top 10px
+  padding-top 0px
 
   h1 
-    display none
     font-weight 800
     font-size 28pt
     text-transform uppercase
@@ -39,7 +44,7 @@ header
     margin 0 
     text-align center
     
-  a 
+  a, a:link, a:visited
     color black
     text-decoration none
 
@@ -266,6 +271,69 @@ header
         text-shadow #511 1px 1px 2px
         
 
+#moduleInfo
+  background white
+  border #ccc
+  border-radius 4px
+  box-shadow 0px 0px 10px #aaa
+  margin-top 20px
+  width 800px - 40px
+  padding 12px 20px
+
+  h2
+    font-size 22pt
+    margin-top 0px
+    margin-bottom 10px
+
+    .v
+      font-weight 400
+      color #aaa
+      padding-left 10px
+
+  div.owner
+    float right
+    padding 0 0 15px 15px
+
+  p.desc 
+    margin 5px 0
+    font-size 13pt
+
+  p.link
+    margin 0
+
+  h3.tags
+    margin 5px 0
+
+  h3.npmlink
+    margin 25px 0 5px 0
+
+  p.npmlink
+    margin 15px 20px
+
+  section.github
+    margin 2px 20px
+
+  ul.tags
+    margin 10px 20px
+    padding 0
+
+    li.tag
+      margin 3px 5px
+      padding 2px 4px
+      display inline-block
+      background #feded5
+      border-radius 4px
+
+  p.npm
+    margin 25px 0
+    background #eee
+    padding 3px 10px
+    font-family Monaco, Consolas, monospace
+    font-size 10pt
+    width 400px
+
+    .shell
+      color #999
 
 footer
   //position: fixed
@@ -287,7 +355,7 @@ footer
     font-size 11px
     font-weight bold
 
-  a
+  a, a:link, a:active, a:visited
     color #116
 
   .tm 

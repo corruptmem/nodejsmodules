@@ -2,7 +2,7 @@
 html
   head
     meta(charset='utf-8')
-    title Hello World
+    title= (typeof(title)!=="undefined"?title + " - ":"") + "Node.JS Modules"
     != css('main')
     link(href='http://fonts.googleapis.com/css?family=Cabin|Exo:200,400,600,800', rel='stylesheet', type='text/css')
   body(data-type=currentType, data-tag=currentTag)
