@@ -20,13 +20,18 @@ class HomeController
 
     Seq()
       .par(-> moduleList type, tag, this)
-      .par(-> tagList this)
+      .par(-> tagList null, this)
       .seq((mods, tags) =>
         viewdata.currentTag = tag ? 'all'
         viewdata.currentType = type
         viewdata.modules = mods
-        viewdata.tags = (t._id for t in tags)
-        viewdata.tags.splice(0, 0, "all")
+        viewdata.tags = (t for t in tags when tag != t)
+        
+        if tag != 'all'
+          viewdata.tags.splice(0, 0, "all")
+        
+        if tag?
+          viewdata.tags.splice(1, 0, tag)
 
         @attachGravatars(mods)
         @annotateScores(mods, type)

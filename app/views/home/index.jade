@@ -14,8 +14,8 @@ block header
 
 block content
   section#tags
-    //- div#searchTags
-    //-  input(type='text', placeholder='Find tag...')
+    div#searchTags
+      input(type='text', placeholder='Find tag...')
     ul
       each tag in tags
         li(data-val=tag, class='tag-b selectable ' + (currentTag==tag?'selected':''))

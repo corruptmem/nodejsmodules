@@ -31,7 +31,7 @@ app.configure 'development', =>
 app.configure 'production', =>
   app.use express.errorHandler()
 
-for controller in ["home"]
+for controller in ["home", "tags"]
   require("./app/controllers/#{controller}").setup(app)
 
 app.listen config.web.port

@@ -27,7 +27,7 @@ load_index = (type, tag, push, load) ->
 
   $(".selectable.tag-b").removeClass('selected')
   $(".selectable.type-b").removeClass('selected')
-  $(".selectable.tag-b[data-val=#{tag}]").addClass('selected')
+  $(".selectable.tag-b[data-val=#{tag}]:first").addClass('selected')
   $(".selectable.type-b[data-val=#{type}]").addClass('selected')
   
   url = home_index_link(type, tag)
@@ -61,30 +61,48 @@ load_index = (type, tag, push, load) ->
 
     replace() if run
 
+loadTags = (text) =>
+  selected = $('li.tag-b.selected').data('val')
+  $.getJSON "/tags.json?q=#{text}", (tags) =>
+    $('li.tag-b').remove()
+    results = $('#tags ul')
+    if selected != 'all'
+      results.append $("<li data-val='all' class='tag-b selectable'><a href='/tags/all' class='tag'>all</a></li>")
+    results.append $("<li data-val='#{selected}' class='tag-b selectable selected'><a href='/tags/#{selected}' class='tag'>#{selected}</a></li>")
+    for tag in tags
+      $tag = $("<li data-val='#{tag}' class='tag-b selectable'><a href='/tags/#{tag}' class='tag'>#{tag}</a></li>")
+      if tag == selected or tag == 'all'
+        continue
+      results.append $tag
+
 
 window.onpopstate = (state) ->
-  console.log(state.state)
   if not state.state?
-    console.log("Replace")
     window.history.replaceState { type: $('body').data('type'), tag: $('body').data('tag') }, "", window.location
   else
     load_index state.state?.type, state.state?.tag, false, true
 
+$('body').on 'click', 'li[href]', (evt) ->
+  window.location = $(this).attr('href')
+
+$('#searchTags input').on 'change keyup', (evt) =>
+  if $(evt.target).data('existing') != evt.target.value
+    $(evt.target).data('existing', evt.target.value)
+    loadTags(evt.target.value)
+
+$('#tags').on 'click', 'a.tag', (evt) ->
+  if evt.which != 1 or evt.metaKey or evt.ctrlKey
+    return
+
+  $this = $ this
+  tag = $this.text()
+  load_index undefined, tag, true, true
+
+
+  evt.stopPropagation()
+  evt.preventDefault()
+
 $ ->
-  $('body').on 'click', 'li[href]', (evt) ->
-    window.location = $(this).attr('href')
-
-  $('a.tag').click (evt) ->
-    if evt.which != 1 or evt.metaKey or evt.ctrlKey
-      return
-
-    $this = $ this
-    tag = $this.text()
-    load_index undefined, tag, true, true
-
-
-    evt.stopPropagation()
-    evt.preventDefault()
   
   $('a.type').click (evt) ->
     if evt.which != 1 or evt.metaKey or evt.ctrlKey

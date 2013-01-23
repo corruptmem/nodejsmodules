@@ -13,12 +13,18 @@ block content
 
     p.desc #{locals.description} 
     
-    p.link
-      a(href=locals.url) #{locals.url}
-
+    h3 usage 
     p.npm
       span.shell $ 
       | npm install #{locals.id}
+    
+    h3 links
+    ul
+      li
+        a(href="https://npmjs.org/package/" + locals.id) npm registry
+      if locals.url
+        li
+          a(href=locals.url) homepage
 
     if locals.github
       h3.githubTitle github
@@ -30,11 +36,8 @@ block content
         p
           a(href=locals.github.url) #{locals.github.url}
     
-    h3.tags tags
-    ul.tags
-      each keyword in locals.keywords
-        li.tag= keyword
-
-    h3.npmlink NPM repository
-    p.npmlink
-      a(href="https://npmjs.org/package/" + locals.id)= locals.id
+    if locals.keywords.length > 0
+      h3.tags tags
+      ul.tags
+        each keyword in locals.keywords
+          li.tag= keyword
