@@ -5,7 +5,6 @@ expressParams = require 'express-params'
 
 config = require './config'
 
-
 app = express()
 app.set 'views', __dirname + '/app/views'
 app.set 'view engine', 'jade'
@@ -34,11 +33,24 @@ app.configure 'production', =>
 for controller in ["home", "tags"]
   require("./app/controllers/#{controller}").setup(app)
 
-# process management (use naught)
+# process management
+server = null
 mongoose.connect(config.mongodb)
 mongoose.connection.once 'open', =>
-  app.listen config.web.port, =>
+  server = app.listen config.web.port, =>
     process.send('online') if process.send?
 
-process.on 'message', (message) =>
-  process.exit(0) if message == 'shutdown'
+quit = =>
+  console.log "worker #{process.pid}: terminating gracefully"
+  if server?
+    server.close =>
+      console.log "worker #{process.pid}: server closed"
+      mongoose.disconnect () =>
+        console.log("worker #{process.pid}: mongoose disconnected; terminating process")
+        process.exit(0)
+  else
+    process.exit(0)
+
+process.on 'message', (message) => quit() if message == 'shutdown'
+process.on 'SIGTERM', quit
+process.on 'SIGINT', quit

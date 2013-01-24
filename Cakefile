@@ -27,3 +27,6 @@ task 'build', 'Build project from coffee to js and put in out/ dir', ->
   exec 'cp -r config.yaml out/config.yaml', (err, stdout, stderr) ->
     throw err if err
     console.log stdout + stderr
+  exec 'cp -r node_modules/ out/node_modules', (err, stdout, stderr) ->
+    throw err if err
+    console.log stdout + stderr
