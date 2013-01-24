@@ -5,7 +5,6 @@ expressParams = require 'express-params'
 
 config = require './config'
 
-mongoose.connect(config.mongodb)
 
 app = express()
 app.set 'views', __dirname + '/app/views'
@@ -35,4 +34,11 @@ app.configure 'production', =>
 for controller in ["home", "tags"]
   require("./app/controllers/#{controller}").setup(app)
 
-app.listen config.web.port
+# process management (use naught)
+mongoose.connect(config.mongodb)
+mongoose.connection.once 'open', =>
+  app.listen config.web.port, =>
+    process.send('online') if process.send?
+
+process.on 'message', (message) =>
+  process.exit(0) if message == 'shutdown'
