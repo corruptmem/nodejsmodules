@@ -83,7 +83,8 @@ class HomeController
 
   attachGravatars: (mods) ->
     for mod in mods
-      mod.ownerGravatar =  gravatar.url(mod.owner ? 'nobody@example.com', { s: 120, d: "retro" })
+      mod.ownerGravatar =  gravatar.url(mod.owner ? 'nobody@example.com', { s: 70, d: "retro" })
+      mod.ownerGravatarHighRes =  gravatar.url(mod.owner ? 'nobody@example.com', { s: 140, d: "retro" })
 
   @setup: (app) =>
     my = new HomeController()
