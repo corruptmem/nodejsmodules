@@ -16,18 +16,28 @@ expressParams.extend(app)
 app.configure =>
   app.use express.bodyParser()
   app.use express.methodOverride()
+
+app.configure 'production', =>
+  app.use (req, res, next) =>
+    res.setHeader("Cache-Control", "public, max-age=345600")
+    res.setHeader("Expires", new Date(Date.now() + 345600000).toUTCString())
+    console.log(req.url)
+    next()
+
+app.configure =>
   app.use app.router
 
 app.configure 'development', =>
   app.use express.static __dirname + "/public"
-  app.use(require('connect-assets')())
+  app.use require('connect-assets')
   app.use express.errorHandler {
     dumpExceptions: true
     showStack: true
   }
 
 app.configure 'production', =>
-  app.use(require('connect-assets') { buildDir: "public", servePath: "https://d1g0cckr7vxu10.cloudfront.net" })
+  servePath = "https://d1g0cckr7vxu10.cloudfront.net"
+  app.use(require('connect-assets') { buildDir: "public", servePath: servePath })
   app.use express.errorHandler()
 
 for controller in ["home", "tags"]

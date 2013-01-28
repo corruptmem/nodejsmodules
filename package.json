@@ -13,8 +13,8 @@
     "gravatar": "1.0.6",
     "nib": "0.9.1",
     "jade": "0.27.7",
-    "connect-assets": "2.3.3",
     "coffee-script": "1.4.0",
-    "express-params": "0.0.3"
+    "express-params": "0.0.3",
+    "connect-assets": "git://github.com/corruptmem/connect-assets.git"
   }
 }
