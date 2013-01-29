@@ -111,7 +111,7 @@ header
   padding-bottom: 150px
 
 #modules
-  width 800px
+  width 770px
   box-shadow #ccc 0px 2px 5px 2px
   position relative
   transition opacity 0.2s ease-out, transform 0.2s ease-out
@@ -214,15 +214,26 @@ header
 #search 
   display none
 
+#right
+  position absolute
+  right 0
+  top 0
+  width 310px
+
+#ad
+  text-align center
+  margin-top 10px
+  background white
+  border-radius 5px
+  border 1px solid #ccc
+  box-shadow #ccc 0 2px 5px 2px
+  padding 10px 0
+
 #tags, #search
   background linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.0)), url("/img/subtle_dots_orange.png")
   box-shadow #914028 0px 1px 7px
   border-radius 2px
-  position absolute
-  right 0
   padding 10px
-  top 0
-  width 260px
   text-align jusitfy
   overflow hidden
 
@@ -249,6 +260,7 @@ header
     list-style-type none
     margin 0
     padding 0
+    max-height: 605px;
 
     li
       display inline-block

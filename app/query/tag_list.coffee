@@ -10,6 +10,6 @@ module.exports = (query, callback) =>
     else
       q = collection.find()
 
-    q.sort({"value.score": -1}).limit(100).toArray (err, results) =>
+    q.sort({"value.score": -1}).limit(60).toArray (err, results) =>
       return callback(err) if err?
       callback null, (r._id for r in results)

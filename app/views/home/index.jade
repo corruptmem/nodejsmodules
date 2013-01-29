@@ -13,16 +13,26 @@ block header
     li.selected Tags
 
 block content
-  section#tags
-    div#searchTags
-      input(type='text', placeholder='Find tag...')
-    ul
-      each tag in tags
-        li(data-val=tag, class='tag-b selectable ' + (currentTag==tag?'selected':''))
-          a.tag(href=home_index_link(currentType, tag))= tag
+  section#right
+    section#tags
+      div#searchTags
+        input(type='text', placeholder='Find tag...')
+      ul
+        each tag in tags
+          li(data-val=tag, class='tag-b selectable ' + (currentTag==tag?'selected':''))
+            a.tag(href=home_index_link(currentType, tag))= tag
 
-  section#search
-    div#searchSite
-      input(type='text', placeholder='Find...')
+    section#search
+      div#searchSite
+        input(type='text', placeholder='Find...')
+
+    section#ad
+      script(type="text/javascript")
+        google_ad_client = "ca-pub-6977729569660862";
+        /* NSJM - Right */
+        google_ad_slot = "6835835715";
+        google_ad_width = 300;
+        google_ad_height = 600;
+      script(type="text/javascript", src="https://pagead2.googlesyndication.com/pagead/show_ads.js")
 
   include _modules
