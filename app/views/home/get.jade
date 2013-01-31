@@ -1,43 +1,63 @@
 extends ../layout
 block header
+  ul#page
+    li
+      a(href=home_index_link('popular', 'all')) Popular
+    li
+      a(href=home_index_link('interesting', 'all')) Interesting
+    li
+      a(href=home_index_link('new', 'all')) New
 
 block content
+  section#right
+    section#ad
+      script(type="text/javascript")
+        google_ad_client = "ca-pub-6977729569660862";
+        /* NSJM - Right */
+        google_ad_slot = "6835835715";
+        google_ad_width = 300;
+        google_ad_height = 600;
+      script(type="text/javascript", src="https://pagead2.googlesyndication.com/pagead/show_ads.js")
+
   section#moduleInfo
-    div.owner
-      a(href="mailto:" + locals.owner)
-        img(src=locals.ownerGravatarHighRes)
+    #top
+      div.owner
+        a(href="mailto:" + locals.owner)
+          img(src=locals.ownerGravatarHighRes)
 
-    h2
-      span.id= locals.id 
-      span.v= locals.latestVersion
+      h2
+        span.id= locals.id 
+        span.v= locals.latestVersion
 
-    p.desc #{locals.description} 
-    
-    h3 usage 
-    p.npm
-      span.shell $ 
-      | npm install #{locals.id}
-    
-    h3 links
-    ul
-      li
-        a(href="https://npmjs.org/package/" + locals.id) npm registry
-      if locals.url
+      p.desc #{locals.description} 
+
+    #bottom
+      h3 usage 
+      p.npm
+        span.shell $ 
+        | npm install #{locals.id}
+      
+      h3 links
+      ul
         li
-          a(href=locals.url) homepage
+          a(href="https://npmjs.org/package/" + locals.id) npm registry
+        if locals.url
+          li
+            a(href=locals.url) homepage
 
-    if locals.github
-      h3.githubTitle github
-      section.github
-        p
-          iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=watch&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
-        p
-          iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=fork&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
-        p
-          a(href=locals.github.url) #{locals.github.url}
-    
-    if locals.keywords.length > 0
-      h3.tags tags
-      ul.tags
-        each keyword in locals.keywords
-          li.tag= keyword
+      if locals.github
+        h3.githubTitle github
+        section.github
+          p
+            iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=watch&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
+          p
+            iframe(src="http://ghbtns.com/github-btn.html?user=#{locals.github.owner}&repo=#{locals.id}&type=fork&size=large&count=true", allowtransparency=true, frameborder=0, scrolling=0, width=170, height=30)
+          p
+            a(href=locals.github.url) #{locals.github.url}
+      
+      if locals.keywords.length > 0
+        h3.tags tags
+        ul.tags
+          each keyword in locals.keywords
+            li.tag
+              a(href="/tags/#{keyword}")= keyword

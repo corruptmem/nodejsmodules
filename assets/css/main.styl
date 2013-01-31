@@ -222,7 +222,6 @@ header
 
 #ad
   text-align center
-  margin-top 10px
   background white
   border-radius 5px
   border 1px solid #ccc
@@ -236,6 +235,7 @@ header
   padding 10px
   text-align jusitfy
   overflow hidden
+  margin-bottom 20px
 
   #searchTags, #searchSite
     padding 0 0 10px 0
@@ -244,7 +244,7 @@ header
       color #914028  
       border 1px solid #f9a48b
       padding 7px
-      width 244px
+      width 272px
       font-weight bold
       font-size 12pt
 
@@ -286,67 +286,79 @@ header
 
 #moduleInfo
   background white
-  border #ccc
-  border-radius 4px
-  box-shadow 0px 0px 10px #aaa
-  margin-top 20px
-  width 800px - 40px
-  padding 12px 20px
+  border-radius 1px
+  box-shadow #ccc 0px 2px 5px 2px
+  margin-top 12px
+  width 770px - 40px
 
-  h2
-    font-size 22pt
-    margin-top 0px
-    margin-bottom 10px
+  div#top
+    text-shadow 1px 1px black
+    background linear-gradient(top, #888 0%, #555 90%, #444 100%)
+    color white
+    border-bottom 1px solid #444
+    padding 12px 20px
+    h2
+      font-size 22pt
+      margin-top 0px
+      margin-bottom 10px
 
-    .v
-      font-weight 400
-      color #aaa
-      padding-left 10px
+      .v
+        font-weight 400
+        color #ddd
+        padding-left 10px
+        
+    div.owner
+      float right
+      margin 0 0 15px 15px
+      line-height 0
+      padding 4px
+      background white
+      border 1px solid #eee
 
-  div.owner
-    float right
-    padding 0 0 15px 15px
+  div#bottom
+    background linear-gradient(top, #fafafa, #fff 100px)
+    padding 12px 20px
 
-  p.desc 
-    margin 5px 0
-    font-size 13pt
+    p.desc 
+      margin 5px 0
+      font-size 13pt
 
-  p.link
-    margin 0
+    p.link
+      margin 0
 
-  h3.tags
-    margin 5px 0
+    h3.tags
+      margin 5px 0
 
-  h3.npmlink
-    margin 25px 0 5px 0
+    h3.npmlink
+      margin 25px 0 5px 0
 
-  p.npmlink
-    margin 15px 20px
+    p.npmlink
+      margin 15px 20px
 
-  section.github
-    margin 2px 20px
+    section.github
+      margin 2px 20px
 
-  ul.tags
-    margin 10px 20px
-    padding 0
+    ul.tags
+      margin 10px 20px
+      padding 0
 
-    li.tag
-      margin 3px 5px
-      padding 2px 4px
-      display inline-block
-      background #feded5
-      border-radius 4px
+      li.tag
+        margin 3px 5px
+        padding 2px 4px
+        display inline-block
+        background #feded5
+        border-radius 4px
 
-  p.npm
-    margin 25px 0
-    background #eee
-    padding 3px 10px
-    font-family Monaco, Consolas, monospace
-    font-size 10pt
-    width 400px
+    p.npm
+      margin 25px 0
+      background #eee
+      padding 3px 10px
+      font-family Monaco, Consolas, monospace
+      font-size 10pt
+      width 400px
 
-    .shell
-      color #999
+      .shell
+        color #999
 
 footer
   //position: fixed

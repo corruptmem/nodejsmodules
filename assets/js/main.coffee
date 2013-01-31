@@ -33,6 +33,7 @@ load_index = (type, tag, push, load) ->
   url = home_index_link(type, tag)
 
   window.history.pushState { type: type, tag: tag }, "", url if push
+  _gaq.push(['trackPageview', url])
   document.title = "#{type[0].toUpperCase()}#{type[1..]} #{if tag? and tag != "all" then tag else ""} modules - Node.JS Modules"
 
   return unless load

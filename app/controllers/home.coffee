@@ -13,7 +13,7 @@ class HomeController
     type = type[0]
     tag = tag[0] if tag? and tag.length > 0
 
-
+    viewdata.canonicalUrl = "https://nodejsmodules.org/#{if type != 'popular' then "#{type}/" else ''}#{if tag? and tag != 'all' then "tags/#{tag}" else ''}"
     viewdata.title = "#{type[0].toUpperCase()}#{type[1..]} #{if tag? then tag else ""} modules"
 
     format = req.param 'format'
@@ -64,6 +64,7 @@ class HomeController
       doc = doc[0]
       doc.currentType = null
       doc.currentTag = null
+      doc.canonicalUrl = "https://nodejsmodules.org/pkg/#{id}"
 
       formats = {
         html: () -> res.render('home/get', doc)
