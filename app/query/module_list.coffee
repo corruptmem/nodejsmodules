@@ -3,7 +3,7 @@ NpmPackage = require('../../model/NpmPackage')
 module.exports = (type, keyword, callback) =>
     sort = {}
     sort["metrics." + type + "Score"] = -1
-    filter = if keyword? and keyword.length > 0 and keyword != 'all' then {"keywords": keyword} else {}
+    filter = if keyword? and keyword.length > 0 and keyword != 'all' then {"normalisedKeywords": keyword} else {}
 
     select =
       id: 1

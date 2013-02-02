@@ -9,13 +9,11 @@ mongoose.connect(config.mongodb)
 mr = {}
 
 mr.map = () ->
-  return unless this.keywords? and this.keywords.length? > 0
+  return unless this.normalisedKeywords? and this.normalisedKeywords.length? > 0
+  return unless this.metrics.popularScore > 0
 
-  re = /^[a-zA-Z0-9\-]+$/
-
-  for keyword in this.keywords
-    if re.test(keyword) and this.metrics.popularScore > 0
-      emit(keyword, { score: this.metrics.popularScore })
+  for keyword in this.normalisedKeywords
+    emit(keyword, { score: this.metrics.popularScore })
 
 mr.reduce = (key, values) ->
   object = { score: 0 }

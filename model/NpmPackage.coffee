@@ -3,6 +3,7 @@ schema = mongoose.Schema({
   id: String,
   description: String,
   keywords: [ String ],
+  normalisedKeywords: [ String ],
   latestVersion: String,
   url: String,
   repository: {
@@ -101,6 +102,7 @@ schema = mongoose.Schema({
 schema.index({"id": 1}, {unique: true})
 schema.index({"owner": 1})
 schema.index({"keywords": 1})
+schema.index({"normalisedKeywords": 1})
 schema.index({"metrics.newScore": 1})
 schema.index({"metrics.interestingScore": 1})
 schema.index({"metrics.popularScore": 1})

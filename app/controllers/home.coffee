@@ -69,7 +69,6 @@ class HomeController
       formats = {
         html: () -> res.render('home/get', doc)
         json: () -> res.send(doc)
-        partial: () -> res.render('home/_pkg', doc)
       }
 
       if format of formats
@@ -93,9 +92,8 @@ class HomeController
     app.param("tag", /[A-Za-z0-9\-\._]+/)
     app.param("sort", /(interesting|new|popular)/)
 
-    app.get "/pkg/:pkgid.:format?", my.get
-    app.get "/.:format?", my.index
-    app.get "/:sort?.:format?", my.index
-    app.get "/:sort?/tags/:tag.:format?", my.index
+    app.get "/pkg/:pkgid/:format?", my.get
+    app.get "/:sort?/:format?", my.index
+    app.get "/:sort?/tags/:tag/:format?", my.index
 
 module.exports = HomeController

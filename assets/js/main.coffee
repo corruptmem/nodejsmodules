@@ -27,8 +27,8 @@ load_index = (type, tag, push, load) ->
 
   $(".selectable.tag-b").removeClass('selected')
   $(".selectable.type-b").removeClass('selected')
-  $(".selectable.tag-b[data-val=#{tag}]:first").addClass('selected')
-  $(".selectable.type-b[data-val=#{type}]").addClass('selected')
+  $(".selectable.tag-b[data-val=\"#{tag}\"]:first").addClass('selected')
+  $(".selectable.type-b[data-val=\"#{type}\"]").addClass('selected')
   
   url = home_index_link(type, tag)
 
@@ -47,8 +47,11 @@ load_index = (type, tag, push, load) ->
     replace() if replace?
     run = true), 400
 
-  
-  $.get url + ".partial", (content) ->
+  $('#loading').addClass('visible')
+  if url == "/"
+    url = "/popular"
+  $.get url + "/partial", (content) ->
+    $('#loading').removeClass('visible')
     replace = () ->
       $('#modules').remove()
       $('#main').append(content)
