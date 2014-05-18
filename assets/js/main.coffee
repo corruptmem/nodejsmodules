@@ -86,9 +86,6 @@ window.onpopstate = (state) ->
   else
     load_index state.state?.type, state.state?.tag, false, true
 
-$('body').on 'click', 'li[href]', (evt) ->
-  window.location = $(this).attr('href')
-
 $('#searchTags input').on 'change keyup', (evt) =>
   if $(evt.target).data('existing') != evt.target.value
     $(evt.target).data('existing', evt.target.value)
